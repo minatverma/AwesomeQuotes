@@ -2,5 +2,7 @@
     <string name="app_name">Awesome Quotes</string>
     <string name="default_quote">Quote</string>
     <string name="default_item">Item</string>
-    <string name="savequote">saveQuote</string>
+    <string name="save_quote">Save Quote</string>
+    <string name="action_refresh">Refresh</string>
+    <string name="action_share">Share</string>
 </resources>

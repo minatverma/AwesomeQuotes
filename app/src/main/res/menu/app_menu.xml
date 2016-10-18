@@ -2,16 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item
-        android:id="@+id/action_share_quote"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/action_share"
-        app:showAsAction="always"/>
 
     <item
-        android:id="@+id/action_copy_quote"
-        android:icon="@mipmap/ic_content_copy_white"
-        android:title="@string/action_share"
-        app:showAsAction="always"/>
+        android:id="@+id/action_refresh"
+        android:icon="@android:drawable/stat_notify_sync"
+        android:title="@string/action_refresh"
+        app:showAsAction="never"/>
+
 
 </menu>

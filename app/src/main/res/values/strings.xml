@@ -5,4 +5,5 @@
     <string name="save_quote">Save Quote</string>
     <string name="action_refresh">Refresh</string>
     <string name="action_share">Share</string>
+    <string name="action_copy">Copy Quote</string>
 </resources>

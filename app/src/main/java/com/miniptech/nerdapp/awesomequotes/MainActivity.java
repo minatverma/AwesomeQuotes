@@ -1,9 +1,16 @@
 package com.miniptech.nerdapp.awesomequotes;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -20,14 +27,16 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private List<Quote> quotes;
-    private ListView listView;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        this.listView = (ListView) findViewById(R.id.listView);
+        Toolbar app_default_toolbar = (Toolbar) findViewById(R.id.app_default_toolbar);
+        setSupportActionBar(app_default_toolbar);
+        ListView listView = (ListView) findViewById(R.id.listView);
+        registerForContextMenu(listView);
         receiveQuotes();
 
         ArrayAdapter<Quote> adapter = new CustomArrayAdapter(this, quotes);
@@ -39,9 +48,73 @@ public class MainActivity extends AppCompatActivity {
                 String quote = quotes.get(position).getQuote();
                 String author = quotes.get(position).getAuthor();
 //                Toast.makeText(MainActivity.this, quote, Toast.LENGTH_LONG).show();
-                shareQuote(quote + "\n\t\t--" + author);
+//                shareQuote(quote + "\n\t\t--" + author);
             }
         });
+
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//                return true;
+//            }
+//        });
+    }
+
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId() == R.id.listView) {
+            super.onCreateContextMenu(menu, v, menuInfo);
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.share_menu, menu);
+
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        ContextMenu.ContextMenuInfo menuInfo;
+        menuInfo = item.getMenuInfo();
+        int position = ((AdapterView.AdapterContextMenuInfo)menuInfo).position;
+        String quote = quotes.get(position).toString();
+        switch (item.getItemId()){
+            case R.id.action_copy_quote:
+                ClipboardManager clipboard = (ClipboardManager)
+                        getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Quote Text", quote);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(this, "Quote copied to clipboard", Toast.LENGTH_SHORT).show();
+                return false;
+            case R.id.action_share_quote:
+                shareQuote(quote);
+        }
+        return super.onContextItemSelected(item);
+
+    }
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.app_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_refresh:
+                // User chose the "Settings" item, show the app settings UI...
+                return true;
+
+            default:
+                // If we got here, the user's action was not recognized.
+                // Invoke the superclass to handle it.
+                return super.onOptionsItemSelected(item);
+
+        }
     }
 
 

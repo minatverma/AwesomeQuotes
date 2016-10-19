@@ -16,6 +16,7 @@ import java.util.List;
 
 public class SplashActivity extends AppCompatActivity implements GeneratorListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +43,6 @@ public class SplashActivity extends AppCompatActivity implements GeneratorListen
     @Override
     public void onFailed(Exception ex) {
         Toast.makeText(this, "Failed to download the quotes. Check Internet Connectivity"
-
                 , Toast.LENGTH_SHORT).show();
         finish();   // Close the application
     }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 
 public class Quote implements Serializable {
-    private static final int PREVIEW_LENGTH = 200;
+    private static final int PREVIEW_LENGTH = 500;
     private String quote;
     private String author;
 
